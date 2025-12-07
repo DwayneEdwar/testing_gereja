@@ -15,11 +15,6 @@ return [
     |
     */
 
-    // ...
-    'auth_provider_model' => 'App\\Models\\User',
-    // ...
-
-
     'shield_resource' => [
         'slug' => 'shield/roles',
         'show_model_path' => true,
