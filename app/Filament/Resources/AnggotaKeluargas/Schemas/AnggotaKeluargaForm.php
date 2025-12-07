@@ -14,9 +14,9 @@ class AnggotaKeluargaForm
     {
         return $schema
             ->components([
-                TextInput::make('kk_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('kk_id')
+                    ->relationship('kk', 'name_kk')
+                    ->label('Nama Keluarga'),
                 TextInput::make('nama')
                     ->required(),
                 Select::make('jenis_kelamin')

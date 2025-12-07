@@ -15,8 +15,8 @@ class AnggotaKeluargasTable
     {
         return $table
             ->columns([
-                TextColumn::make('kk_id')
-                    ->numeric()
+                TextColumn::make('kk.name_kk')
+                    ->label('Nama Keluarga')
                     ->sortable(),
                 TextColumn::make('nama')
                     ->searchable(),

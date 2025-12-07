@@ -14,14 +14,14 @@ class AnggotaPelkasTable
     {
         return $table
             ->columns([
-                TextColumn::make('kelompok_id')
-                    ->numeric()
+                TextColumn::make('kelompok.nama')
+                    ->Label('Kolom')
                     ->sortable(),
-                TextColumn::make('pelka_id')
-                    ->numeric()
+                TextColumn::make('pelka.nama')
+                    ->label('Organisasi')
                     ->sortable(),
-                TextColumn::make('anggota_keluarga_id')
-                    ->numeric()
+                TextColumn::make('anggotaKeluarga.nama')
+                    ->label('Nama Jemaat')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

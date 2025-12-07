@@ -14,16 +14,21 @@ class DokumensTable
     {
         return $table
             ->columns([
-                TextColumn::make('anggota_keluarga_id')
-                    ->numeric()
+                TextColumn::make('anggota.nama')
+                    ->label('Nama Jemaat')
                     ->sortable(),
                 TextColumn::make('jenis')
                     ->badge(),
-                TextColumn::make('file')
+                 TextColumn::make('file')
+                    ->label('File')
+                    ->url(fn ($record) => $record->file ? asset('storage/' . $record->file) : null)
+                    ->formatStateUsing(fn ($state) => 'Lihat Document')
+                    ->openUrlInNewTab()
                     ->searchable(),
-                TextColumn::make('diunggah_oleh')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('uploader.name')
+                    ->label('Diunggah Oleh')
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

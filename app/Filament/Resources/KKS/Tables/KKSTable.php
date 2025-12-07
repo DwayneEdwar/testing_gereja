@@ -18,7 +18,7 @@ class KKSTable
                     ->searchable(),
                 TextColumn::make('name_kk')
                     ->searchable(),
-                TextColumn::make('kelompok_id')
+                TextColumn::make('kelompok.nama')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('alamat')

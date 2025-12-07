@@ -4,6 +4,7 @@ namespace App\Filament\Resources\KKS\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
 
 class KKForm
 {
@@ -15,9 +16,8 @@ class KKForm
                     ->required(),
                 TextInput::make('name_kk')
                     ->required(),
-                TextInput::make('kelompok_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('kelompok_id')
+                    ->relationship('kelompok', 'nama'),
                 TextInput::make('alamat'),
             ]);
     }

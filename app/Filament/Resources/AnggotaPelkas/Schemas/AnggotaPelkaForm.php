@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\AnggotaPelkas\Schemas;
 
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class AnggotaPelkaForm
@@ -11,15 +11,14 @@ class AnggotaPelkaForm
     {
         return $schema
             ->components([
-                TextInput::make('kelompok_id')
+                Select::make('kelompok_id')
+                    ->relationship('kelompok', 'nama'),
+                Select::make('pelka_id')
                     ->required()
-                    ->numeric(),
-                TextInput::make('pelka_id')
+                    ->relationship('pelka', 'nama'),
+                Select::make('anggota_keluarga_id')
                     ->required()
-                    ->numeric(),
-                TextInput::make('anggota_keluarga_id')
-                    ->required()
-                    ->numeric(),
+                    ->relationship('anggotaKeluarga', 'nama'),
             ]);
     }
 }
