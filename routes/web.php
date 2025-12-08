@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JemaatReportController;
 
 Route::view('/', 'welcome');
+
+Route::get('/admin/jemaat/report/pdf', [JemaatReportController::class, 'downloadPdf'])
+    ->middleware(['auth'])
+    ->name('jemaat.report.pdf');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

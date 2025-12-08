@@ -28,5 +28,9 @@ class AnggotaPelka extends Model
     {
         return $this->belongsTo(AnggotaKeluarga::class, 'anggota_keluarga_id');
     }
+    public function dokumen()
+    {
+        return $this->hasMany(Dokumen::class, 'anggota_keluarga_id', 'anggota_keluarga_id');
+    }
 }
 
