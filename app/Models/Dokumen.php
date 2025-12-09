@@ -10,8 +10,8 @@ class Dokumen extends Model
 
     protected $fillable = [
         'anggota_keluarga_id',
-        'jenis',
-        'file',
+        'file_baptis',
+        'file_sidi',
         'diunggah_oleh',
     ];
 
@@ -24,4 +24,9 @@ class Dokumen extends Model
     {
         return $this->belongsTo(User::class, 'diunggah_oleh');
     }
+    public function ketua()
+    {
+        return $this->belongsTo(User::class, 'ketua_id');
+    }
+
 }

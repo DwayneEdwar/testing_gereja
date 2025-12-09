@@ -20,7 +20,7 @@ class DokumenResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'jenis';
+    protected static ?string $recordTitleAttribute = 'anggota.nama';
 
     public static function form(Schema $schema): Schema
     {

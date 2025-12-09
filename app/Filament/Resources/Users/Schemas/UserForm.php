@@ -20,7 +20,9 @@ class UserForm
                     ->email()
                     ->required(),
                 Select::make('roles')
-                    ->relationship('roles', 'name'),
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload(),
                 TextInput::make('password')
                     ->password()
                     ->required(),

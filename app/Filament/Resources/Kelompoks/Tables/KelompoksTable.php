@@ -16,7 +16,7 @@ class KelompoksTable
             ->columns([
                 TextColumn::make('nama')
                     ->searchable(),
-                TextColumn::make('ketua_id')
+                TextColumn::make('ketua.name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')

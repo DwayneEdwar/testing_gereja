@@ -15,12 +15,12 @@ class StatsOverview extends StatsOverviewWidget
         $jumlahAnggota = AnggotaPelka::count();
         $jumlahKK = Kelompok::count();
 
-        $sudahSidi = Dokumen::where('jenis', 'sidi')
+        $sudahSidi = Dokumen::whereNotNull('file_sidi')
             ->distinct('anggota_keluarga_id')
             ->count('anggota_keluarga_id');
         $belumSidi = $jumlahAnggota - $sudahSidi;
 
-        $sudahBaptis = Dokumen::where('jenis', 'baptis')
+        $sudahBaptis = Dokumen::whereNotNull('file_baptis')
             ->distinct('anggota_keluarga_id')
             ->count('anggota_keluarga_id');
         $belumBaptis = $jumlahAnggota - $sudahBaptis;

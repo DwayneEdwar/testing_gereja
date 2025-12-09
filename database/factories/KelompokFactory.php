@@ -1,0 +1,18 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Kelompok;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class KelompokFactory extends Factory
+{
+    protected $model = Kelompok::class;
+
+    public function definition(): array
+    {
+        return [
+            'nama' => $this->faker->company(),
+        ];
+    }
+}

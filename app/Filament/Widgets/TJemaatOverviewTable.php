@@ -35,29 +35,34 @@ class JemaatOverviewTable extends TableWidget
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('kelompok.nama')->label('Nama KK'),
+            TextColumn::make('kelompok.nama')->label('Nama Kelompok'),
+            TextColumn::make('kelompok.ketua.name')->label('Nama Kordinator Kelompok'),
             TextColumn::make('anggotaKeluarga.nama')->label('Nama Anggota'),
             TextColumn::make('pelka.nama')->label('Pelka'),
-            TextColumn::make('dokumen_sidi')
-                ->label('Sudah Sidi')
-                ->getStateUsing(fn($record) => $record->dokumen->where('jenis','sidi')->count() ? 'Ya' : 'Belum'),
             TextColumn::make('dokumen_baptis')
-                ->label('Sudah Baptis')
-                ->getStateUsing(fn($record) => $record->dokumen->where('jenis','baptis')->count() ? 'Ya' : 'Belum'),
-            TextColumn::make('dokumen')
-                ->label('Dokumen')
+                ->label('Dokumen Baptis')
                 ->getStateUsing(function ($record) {
-                    if ($record->dokumen->isEmpty()) {
-                        return 'Tidak ada dokumen';
+                    $d = $record->dokumen->first();
+                    if ($d && $d->file_baptis) {
+                        return "<a href='".asset('storage/'.$d->file_baptis)."' target='_blank' class='text-blue-600 hover:text-blue-800 hover:underline font-medium inline-block'>📄 Lihat Baptis</a>";
                     }
-                    return collect($record->dokumen)
-                        ->map(fn($d) => "<a href='".asset('storage/'.$d->file)."' target='_blank' class='text-blue-600 hover:text-blue-800 hover:underline font-medium inline-block'>📄 Lihat Dokumen (".ucfirst($d->jenis).")</a>")
-                        ->implode('<br>');
+                    return '-';
                 })
                 ->html()
                 ->searchable(false)
-                ->sortable(false)
-                ->wrap(),
+                ->sortable(false),
+            TextColumn::make('dokumen_sidi')
+                ->label('Dokumen Sidi')
+                ->getStateUsing(function ($record) {
+                    $d = $record->dokumen->first();
+                    if ($d && $d->file_sidi) {
+                        return "<a href='".asset('storage/'.$d->file_sidi)."' target='_blank' class='text-blue-600 hover:text-blue-800 hover:underline font-medium inline-block'>📄 Lihat Sidi</a>";
+                    }
+                    return '-';
+                })
+                ->html()
+                ->searchable(false)
+                ->sortable(false),
             TextColumn::make('diunggah_oleh')
                 ->label('Diunggah Oleh')
                 ->getStateUsing(function ($record) {

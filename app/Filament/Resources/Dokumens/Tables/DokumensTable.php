@@ -17,14 +17,16 @@ class DokumensTable
                 TextColumn::make('anggota.nama')
                     ->label('Nama Jemaat')
                     ->sortable(),
-                TextColumn::make('jenis')
-                    ->badge(),
-                 TextColumn::make('file')
-                    ->label('File')
-                    ->url(fn ($record) => $record->file ? asset('storage/' . $record->file) : null)
-                    ->formatStateUsing(fn ($state) => 'Lihat Document')
-                    ->openUrlInNewTab()
-                    ->searchable(),
+                TextColumn::make('file_baptis')
+                    ->label('File Baptis')
+                    ->url(fn ($record) => $record->file_baptis ? asset('storage/' . $record->file_baptis) : null)
+                    ->formatStateUsing(fn ($state) => $state ? 'Lihat Baptis' : '-')
+                    ->openUrlInNewTab(),
+                TextColumn::make('file_sidi')
+                    ->label('File Sidi')
+                    ->url(fn ($record) => $record->file_sidi ? asset('storage/' . $record->file_sidi) : null)
+                    ->formatStateUsing(fn ($state) => $state ? 'Lihat Sidi' : '-')
+                    ->openUrlInNewTab(),
                 TextColumn::make('uploader.name')
                     ->label('Diunggah Oleh')
                     ->sortable()
