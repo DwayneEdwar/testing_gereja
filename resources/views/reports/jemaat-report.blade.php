@@ -49,8 +49,8 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama KK</th>
-                <th>Nama Anggota</th>
+                <th>Nama Kelompok</th>
+                <th>Nama Jemaat</th>
                 <th>Pelka</th>
                 <th>Status Sidi</th>
                 <th>Status Baptis</th>
@@ -64,8 +64,8 @@
                 <td>{{ $item->kelompok->nama ?? '-' }}</td>
                 <td>{{ $item->anggotaKeluarga->nama ?? '-' }}</td>
                 <td>{{ $item->pelka->nama ?? '-' }}</td>
-                <td>{{ $item->dokumen->where('jenis', 'sidi')->count() ? 'Sudah' : 'Belum' }}</td>
-                <td>{{ $item->dokumen->where('jenis', 'baptis')->count() ? 'Sudah' : 'Belum' }}</td>
+                <td>{{ $item->dokumen->first() && $item->dokumen->first()->file_sidi ? 'Sudah' : 'Belum' }}</td>
+                <td>{{ $item->dokumen->first() && $item->dokumen->first()->file_baptis ? 'Sudah' : 'Belum' }}</td>
                 <td>
                     @foreach($item->dokumen as $dok)
                         {{ $dok->uploader->name ?? '-' }}@if(!$loop->last), @endif
