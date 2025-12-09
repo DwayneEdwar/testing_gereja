@@ -12,18 +12,54 @@ class StatsOverview extends StatsOverviewWidget
 {
     protected function getStats(): array
     {
-        $jumlahAnggota = AnggotaPelka::count();
+        $user = auth()->user();
+
+        // Jumlah Kelompok selalu total untuk semua user
         $jumlahKK = Kelompok::count();
 
-        $sudahSidi = Dokumen::whereNotNull('file_sidi')
-            ->distinct('anggota_keluarga_id')
-            ->count('anggota_keluarga_id');
-        $belumSidi = $jumlahAnggota - $sudahSidi;
+        // Jika user adalah super admin, tampilkan semua data
+        if ($user->hasRole('super_admin')) {
+            $jumlahAnggota = AnggotaPelka::count();
 
-        $sudahBaptis = Dokumen::whereNotNull('file_baptis')
-            ->distinct('anggota_keluarga_id')
-            ->count('anggota_keluarga_id');
-        $belumBaptis = $jumlahAnggota - $sudahBaptis;
+            $sudahSidi = Dokumen::whereNotNull('file_sidi')
+                ->distinct('anggota_keluarga_id')
+                ->count('anggota_keluarga_id');
+            $belumSidi = $jumlahAnggota - $sudahSidi;
+
+            $sudahBaptis = Dokumen::whereNotNull('file_baptis')
+                ->distinct('anggota_keluarga_id')
+                ->count('anggota_keluarga_id');
+            $belumBaptis = $jumlahAnggota - $sudahBaptis;
+        } else {
+            // Jika user adalah kordinator kelompok, tampilkan hanya data kelompoknya
+            $kelompokUser = Kelompok::where('ketua_id', $user->id)->first();
+            if ($kelompokUser) {
+                $jumlahAnggota = AnggotaPelka::where('kelompok_id', $kelompokUser->id)->count();
+
+                $sudahSidi = Dokumen::whereNotNull('file_sidi')
+                    ->whereHas('anggota.kk', function ($q) use ($kelompokUser) {
+                        $q->where('kelompok_id', $kelompokUser->id);
+                    })
+                    ->distinct('anggota_keluarga_id')
+                    ->count('anggota_keluarga_id');
+                $belumSidi = $jumlahAnggota - $sudahSidi;
+
+                $sudahBaptis = Dokumen::whereNotNull('file_baptis')
+                    ->whereHas('anggota.kk', function ($q) use ($kelompokUser) {
+                        $q->where('kelompok_id', $kelompokUser->id);
+                    })
+                    ->distinct('anggota_keluarga_id')
+                    ->count('anggota_keluarga_id');
+                $belumBaptis = $jumlahAnggota - $sudahBaptis;
+            } else {
+                // Jika bukan super admin atau kordinator, tampilkan data kosong
+                $jumlahAnggota = 0;
+                $sudahSidi = 0;
+                $belumSidi = 0;
+                $sudahBaptis = 0;
+                $belumBaptis = 0;
+            }
+        }
 
         return [
             Stat::make('Jumlah jemaat', $jumlahAnggota)
@@ -32,8 +68,8 @@ class StatsOverview extends StatsOverviewWidget
                 ->color('primary')
                 ->chart([5, 10, 15, 20, 25, 30, $jumlahAnggota]),
 
-            Stat::make('Jumlah Keluarga', $jumlahKK)
-                ->description('Total keluarga')
+            Stat::make('Jumlah Kelompok', $jumlahKK)
+                ->description('Total kelompok ibadah')
                 ->descriptionIcon('heroicon-m-home')
                 ->color('primary')
                 ->chart([2, 4, 6, 8, 10, 12, $jumlahKK]),
