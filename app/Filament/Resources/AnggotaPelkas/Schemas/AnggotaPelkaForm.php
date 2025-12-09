@@ -30,24 +30,7 @@ class AnggotaPelkaForm
                     }),
                 Select::make('pelka_id')
                     ->required()
-                    ->relationship('pelka', 'nama', function ($query) {
-                        $user = auth()->user();
-                        if ($user->hasRole('super_admin')) {
-                            // Super admin dapat melihat semua pelka
-                            return $query;
-                        } else {
-                            // Kordinator hanya dapat melihat pelka yang terkait dengan kelompoknya sendiri
-                            $kelompokUser = \App\Models\Kelompok::where('ketua_id', $user->id)->first();
-                            if ($kelompokUser) {
-                                return $query->whereHas('anggotaPelka', function ($q) use ($kelompokUser) {
-                                    $q->where('kelompok_id', $kelompokUser->id);
-                                });
-                            } else {
-                                // Jika bukan kordinator, tampilkan kosong
-                                return $query->whereRaw('1 = 0');
-                            }
-                        }
-                    }),
+                    ->relationship('pelka', 'nama'),
                 Select::make('anggota_keluarga_id')
                     ->required()
                     ->relationship('anggotaKeluarga', 'nama', function ($query) {
