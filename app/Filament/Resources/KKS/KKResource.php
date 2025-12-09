@@ -9,6 +9,7 @@ use App\Filament\Resources\KKS\Schemas\KKForm;
 use App\Filament\Resources\KKS\Tables\KKSTable;
 use App\Models\KK;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,9 +19,13 @@ class KKResource extends Resource
 {
     protected static ?string $model = KK::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-home-modern';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Data Jemaat';
 
     protected static ?string $recordTitleAttribute = 'name_KK';
+
+    protected static ?string $navigationLabel = 'Data Keluarga';
 
     public static function form(Schema $schema): Schema
     {

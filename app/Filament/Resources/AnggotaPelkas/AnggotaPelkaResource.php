@@ -9,6 +9,7 @@ use App\Filament\Resources\AnggotaPelkas\Schemas\AnggotaPelkaForm;
 use App\Filament\Resources\AnggotaPelkas\Tables\AnggotaPelkasTable;
 use App\Models\AnggotaPelka;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,9 +19,13 @@ class AnggotaPelkaResource extends Resource
 {
     protected static ?string $model = AnggotaPelka::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-identification';
 
     protected static ?string $recordTitleAttribute = 'pelka_id';
+
+    protected static ?string $navigationLabel = 'Anggota Pelayanan Kategorial';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Data Kelompok';
 
     public static function form(Schema $schema): Schema
     {

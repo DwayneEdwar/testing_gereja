@@ -9,6 +9,7 @@ use App\Filament\Resources\AnggotaKeluargas\Schemas\AnggotaKeluargaForm;
 use App\Filament\Resources\AnggotaKeluargas\Tables\AnggotaKeluargasTable;
 use App\Models\AnggotaKeluarga;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,9 +19,14 @@ class AnggotaKeluargaResource extends Resource
 {
     protected static ?string $model = AnggotaKeluarga::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-home';
 
     protected static ?string $recordTitleAttribute = 'nama';
+
+    protected static ?string $navigationLabel = 'Anggota Keluarga';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Data Jemaat';
+
 
     public static function form(Schema $schema): Schema
     {

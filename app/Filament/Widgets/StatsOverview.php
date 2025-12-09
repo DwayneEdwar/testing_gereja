@@ -74,26 +74,26 @@ class StatsOverview extends StatsOverviewWidget
                 ->color('primary')
                 ->chart([2, 4, 6, 8, 10, 12, $jumlahKK]),
 
-            Stat::make('Sudah Sidi', $sudahSidi)
-                ->description('Anggota yang sudah Sidi')
+            Stat::make('Document Sidi', $sudahSidi)
+                ->description('Jemaat yang sudah ada document Sidi')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success')
                 ->chart([1, 3, 5, 7, 9, 11, $sudahSidi]),
 
-            Stat::make('Belum Sidi', $belumSidi)
-                ->description('Anggota yang belum Sidi')
+            Stat::make('Document Sidi', $belumSidi)
+                ->description('Jemaat yang belum ada document Sidi')
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('danger')
                 ->chart([2, 4, 6, 8, 10, 12, $belumSidi]),
 
-            Stat::make('Sudah Baptis', $sudahBaptis)
-                ->description('Anggota yang sudah Baptis')
+            Stat::make('Document Baptis', $sudahBaptis)
+                ->description('Jemaat yang sudah ada document Baptis')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success')
                 ->chart([1, 2, 4, 6, 8, 10, $sudahBaptis]),
 
-            Stat::make('Belum Baptis', $belumBaptis)
-                ->description('Anggota yang belum Baptis')
+            Stat::make('Document Baptis', $belumBaptis)
+                ->description('Jemaat yang belum ada document Baptis')
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('danger')
                 ->chart([2, 3, 5, 7, 9, 11, $belumBaptis]),

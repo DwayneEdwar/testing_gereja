@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Sistem Gereja')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -55,7 +56,9 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
-                FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make()
+                ->navigationGroup('Setting')
+                ->navigationIcon('heroicon-o-cog') ,
             ])
             ->authMiddleware([
                 Authenticate::class,

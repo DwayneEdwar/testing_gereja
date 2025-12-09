@@ -53,7 +53,7 @@ class JemaatOverviewTable extends TableWidget
         return [
             TextColumn::make('kelompok.nama')->label('Nama Kelompok'),
             TextColumn::make('kelompok.ketua.name')->label('Nama Kordinator Kelompok'),
-            TextColumn::make('anggotaKeluarga.nama')->label('Nama Anggota'),
+            TextColumn::make('anggotaKeluarga.nama')->label('Nama Jemaat'),
             TextColumn::make('pelka.nama')->label('Pelka'),
             TextColumn::make('status_baptis')
                 ->label('Status Baptis')

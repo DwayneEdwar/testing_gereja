@@ -9,6 +9,7 @@ use App\Filament\Resources\Dokumens\Schemas\DokumenForm;
 use App\Filament\Resources\Dokumens\Tables\DokumensTable;
 use App\Models\Dokumen;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,9 +19,13 @@ class DokumenResource extends Resource
 {
     protected static ?string $model = Dokumen::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $recordTitleAttribute = 'anggota.nama';
+
+    protected static ?string $navigationLabel = 'Dokument kelompok';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Data Kelompok';
 
     public static function form(Schema $schema): Schema
     {
