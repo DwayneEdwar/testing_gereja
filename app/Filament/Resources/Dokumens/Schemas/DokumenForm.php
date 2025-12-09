@@ -19,10 +19,27 @@ class DokumenForm
                 Select::make('anggota_keluarga_id')
                     ->label('Anggota Keluarga')
                     ->required()
-                    ->relationship('anggota', 'nama')
+                    ->relationship('anggota', 'nama', function ($query) {
+                        $user = auth()->user();
+                        if ($user->hasRole('super_admin')) {
+                            // Super admin dapat melihat semua anggota
+                            return $query;
+                        } else {
+                            // Kordinator hanya dapat melihat anggota kelompoknya sendiri
+                            $kelompokUser = \App\Models\Kelompok::where('ketua_id', $user->id)->first();
+                            if ($kelompokUser) {
+                                return $query->whereHas('kk', function ($q) use ($kelompokUser) {
+                                    $q->where('kelompok_id', $kelompokUser->id);
+                                });
+                            } else {
+                                // Jika bukan kordinator, tampilkan kosong
+                                return $query->whereRaw('1 = 0');
+                            }
+                        }
+                    })
                     ->searchable()
                     ->preload(),
-                
+
                 Grid::make(2)
                     ->schema([
                         Section::make('Dokumen Baptis')
@@ -39,7 +56,7 @@ class DokumenForm
                                     ->helperText('Format: PDF atau gambar, Maksimal 5MB'),
                             ])
                             ->collapsible(),
-                        
+
                         Section::make('Dokumen Sidi')
                             ->description('Upload dokumen sidi')
                             ->schema([
@@ -55,7 +72,7 @@ class DokumenForm
                             ])
                             ->collapsible(),
                     ]),
-                
+
                 Hidden::make('diunggah_oleh')
                     ->default(fn () => auth()->id()),
             ]);

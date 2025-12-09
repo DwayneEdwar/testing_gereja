@@ -14,5 +14,10 @@ class Pelka extends Model
     {
         return $this->belongsToMany(AnggotaKeluarga::class, 'anggota_pelka', 'pelka_id', 'anggota_keluarga_id');
     }
+
+    public function anggotaPelka()
+    {
+        return $this->hasMany(AnggotaPelka::class, 'pelka_id');
+    }
 }
 

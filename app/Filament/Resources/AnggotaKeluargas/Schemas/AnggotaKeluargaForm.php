@@ -15,7 +15,22 @@ class AnggotaKeluargaForm
         return $schema
             ->components([
                 Select::make('kk_id')
-                    ->relationship('kk', 'name_kk')
+                    ->relationship('kk', 'name_kk', function ($query) {
+                        $user = auth()->user();
+                        if ($user->hasRole('super_admin')) {
+                            // Super admin dapat melihat semua KK
+                            return $query;
+                        } else {
+                            // Kordinator hanya dapat melihat KK kelompoknya sendiri
+                            $kelompokUser = \App\Models\Kelompok::where('ketua_id', $user->id)->first();
+                            if ($kelompokUser) {
+                                return $query->where('kelompok_id', $kelompokUser->id);
+                            } else {
+                                // Jika bukan kordinator, tampilkan kosong
+                                return $query->whereRaw('1 = 0');
+                            }
+                        }
+                    })
                     ->label('Nama Keluarga'),
                 TextInput::make('nama')
                     ->required(),

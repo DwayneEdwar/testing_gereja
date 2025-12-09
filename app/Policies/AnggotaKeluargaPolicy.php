@@ -11,7 +11,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class AnggotaKeluargaPolicy
 {
     use HandlesAuthorization;
-    
+
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:AnggotaKeluarga');
@@ -29,12 +29,34 @@ class AnggotaKeluargaPolicy
 
     public function update(AuthUser $authUser, AnggotaKeluarga $anggotaKeluarga): bool
     {
-        return $authUser->can('Update:AnggotaKeluarga');
+        // Super admin dapat mengupdate semua data
+        if ($authUser->hasRole('super_admin')) {
+            return true;
+        }
+
+        // Kordinator hanya dapat mengupdate data kelompoknya sendiri
+        $kelompokUser = \App\Models\Kelompok::where('ketua_id', $authUser->id)->first();
+        if ($kelompokUser && $anggotaKeluarga->kk && $anggotaKeluarga->kk->kelompok_id === $kelompokUser->id) {
+            return $authUser->can('Update:AnggotaKeluarga');
+        }
+
+        return false;
     }
 
     public function delete(AuthUser $authUser, AnggotaKeluarga $anggotaKeluarga): bool
     {
-        return $authUser->can('Delete:AnggotaKeluarga');
+        // Super admin dapat menghapus semua data
+        if ($authUser->hasRole('super_admin')) {
+            return true;
+        }
+
+        // Kordinator hanya dapat menghapus data kelompoknya sendiri
+        $kelompokUser = \App\Models\Kelompok::where('ketua_id', $authUser->id)->first();
+        if ($kelompokUser && $anggotaKeluarga->kk && $anggotaKeluarga->kk->kelompok_id === $kelompokUser->id) {
+            return $authUser->can('Delete:AnggotaKeluarga');
+        }
+
+        return false;
     }
 
     public function restore(AuthUser $authUser, AnggotaKeluarga $anggotaKeluarga): bool
