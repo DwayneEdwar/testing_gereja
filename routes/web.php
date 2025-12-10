@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JemaatReportController;
+use App\Http\Controllers\ChurchDashboardController;
 
-Route::view('/', 'welcome');
+Route::get('/', [ChurchDashboardController::class, 'index'])->name('home');
 
 Route::get('/admin/jemaat/report/pdf', [JemaatReportController::class, 'downloadPdf'])
     ->middleware(['auth'])
